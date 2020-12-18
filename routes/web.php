@@ -14,3 +14,27 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Criar uma nova rota
+
+// Route::get('/ola', function() {
+//     echo "Olá Mundo!";
+// });
+
+// Adaptando Rota para entrar no assunto, array
+
+Route::get('/series', function() {
+    $series = [
+        'Grey\'s Anatomy',
+        'Lost',
+        'Agents of SHIELD'
+    ];
+
+    $html = "<ul>";
+        foreach ($series as $serie) {
+            $html .="<li>$serie</li>";
+        }
+    $html .= "</ul>";
+
+    return $html;
+});
