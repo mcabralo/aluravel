@@ -23,18 +23,22 @@ Route::get('/', function () {
 
 // Adaptando Rota para entrar no assunto, array
 
-Route::get('/series', function() {
-    $series = [
-        'Grey\'s Anatomy',
-        'Lost',
-        'Agents of SHIELD'
-    ];
+// Route::get('/series', function() {
+//     $series = [
+//         'Grey\'s Anatomy',
+//         'Lost',
+//         'Agents of SHIELD'
+//     ];
 
-    $html = "<ul>";
-        foreach ($series as $serie) {
-            $html .="<li>$serie</li>";
-        }
-    $html .= "</ul>";
+//     $html = "<ul>";
+//         foreach ($series as $serie) {
+//             $html .="<li>$serie</li>";
+//         }
+//     $html .= "</ul>";
 
-    return $html;
-});
+//     echo $html;
+// });
+
+//Uso de uma controller para separar o código e deixar mais específico
+
+Route::get('/series', 'SeriesController@listarSeries');
