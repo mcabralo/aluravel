@@ -39,6 +39,8 @@ Route::get('/', function () {
 //     echo $html;
 // });
 
-//Uso de uma controller para separar o código e deixar mais específico
+/*Uso de uma controller para separar o código e deixar mais específico
+ *Route::get('/series', 'SeriesController@listarSeries');
+ */
 
-Route::get('/series', 'SeriesController@listarSeries');
+Route::get('/series', 'SeriesController@index'); //Feita a troca do nome do método para adequar a convenção
