@@ -2,34 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SeriesFormRequest;
+use App\Serie;
 use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
-    /**
-     * Para automatizar a padronizar existem controllers que são utilizados como o 'index', 'destroy'. Convenção
-     */
-
-    public function index(Request $request) //convenção usar o index na página inicial de uma controller
+    public function index(Request $request)
     {
-        // echo $request->url();
-        /* Método para fazer uma busca de um parâmetro específico 
-        echo $request->query('parametro');
-        Método para buscar o array, útil para ver o fluxo da rota
-        var_dump ($request->query());*/
-        // exit(); 
-        $series = [
-            'Grey\'s Anatomy',
-            'Lost',
-            'Agents of SHIELD'
-        ];
+        $series = Serie::query()
+            ->orderBy('nome')
+            ->get();
+        $mensagem = $request->session()->get('mensagem');
 
-        $html = "<ul>";
-        foreach ($series as $serie) {
-            $html .= "<li>$serie</li>";
-        }
-        $html .= "</ul>";
+        return view('series.index', compact('series', 'mensagem'));
+    }
 
-        return $html;
+    public function create()
+    {
+        return view('series.create');
+    }
+
+    public function store(SeriesFormRequest $request)
+    {
+        $serie = Serie::create($request->all());
+        $request->session()->flash(
+            'mensagem',
+            "Série {$serie->id} criada com sucesso {$serie->nome}"
+        );
+
+        return redirect()->route('listar_series');
+    }
+
+    public function destroy(Request $request)
+    {
+        Serie::destroy($request->id);
+        $request->session()
+            ->flash(
+                'mensagem',
+                "Série removida com sucesso"
+            );
+        return redirect()->route('listar_series');
     }
 }

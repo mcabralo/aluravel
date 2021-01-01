@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Criar uma nova rota
 
@@ -42,5 +42,9 @@ Route::get('/', function () {
 /*Uso de uma controller para separar o código e deixar mais específico
  *Route::get('/series', 'SeriesController@listarSeries');
  */
-
-Route::get('/series', 'SeriesController@index'); //Feita a troca do nome do método para adequar a convenção
+Route::get('/series', 'SeriesController@index')
+    ->name('listar_series');
+Route::get('/series/criar', 'SeriesController@create')
+    ->name('form_criar_serie');
+Route::post('/series/criar', 'SeriesController@store');
+Route::delete('/series/{id}', 'SeriesController@destroy');
